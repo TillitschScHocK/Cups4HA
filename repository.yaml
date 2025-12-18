@@ -1,3 +1,6 @@
-name: Home Assistant FRITZ-Box-Mesh-Overview
-url: 'https://github.com/TillitschScHocK/FRITZ-Box-Mesh-Overview'
-maintainer: TillitschScHocK <https://github.com/TillitschScHocK>
+---
+name: Cupy4HA - Home Assistant Add-ons
+url: https://github.com/TillitschScHocK/Cupy4HA
+maintainer: TillitschScHocK <94850668+TillitschScHocK@users.noreply.github.com>
+codeowners:
+  - TillitschScHocK
