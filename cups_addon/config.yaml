@@ -5,8 +5,10 @@ description: "CUPS Druckserver mit AirPrint-Unterstützung und Netzwerkdruckerer
 url: "https://github.com/TillitschScHocK/Cupy4HA"
 codeowners:
   - TillitschScHocK
+category: utility
 documentation: "https://github.com/TillitschScHocK/Cupy4HA/tree/main/cups_addon"
-isue_tracker: "https://github.com/TillitschScHocK/Cupy4HA/issues"
+issue_tracker: "https://github.com/TillitschScHocK/Cupy4HA/issues"
+icon: mdi:printer
 image: ghcr.io/tillitschschock/cups-print-server
 arch:
   - armhf
