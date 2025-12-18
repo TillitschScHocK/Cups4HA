@@ -1,0 +1,5 @@
+# CUPS Addon - Python Requirements
+# Minimal requirements as most functionality is handled by system packages
+
+pyaml>=5.4.1
+Pyyaml>=5.4.1
