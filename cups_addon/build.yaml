@@ -5,14 +5,10 @@ build_from:
   armhf: ghcr.io/hassio-addons/debian-base:latest
   armv7: ghcr.io/hassio-addons/debian-base:latest
   i386: ghcr.io/hassio-addons/debian-base:latest
-cargs: "-c cups_addon/"
 labels:
   org.opencontainers.image.title: "Home Assistant Add-on: CUPS Print Server"
-  org.opencontainers.image.description: "Full-featured CUPS print server for Home Assistant with network printer discovery and AirPrint support"
+  org.opencontainers.image.description: "CUPS print server for Home Assistant"
   org.opencontainers.image.vendor: "Community"
   org.opencontainers.image.licenses: "MIT"
   org.opencontainers.image.source: "https://github.com/TillitschScHocK/Cupy4HA"
   org.opencontainers.image.documentation: "https://github.com/TillitschScHocK/Cupy4HA"
-  org.opencontainers.image.created: "2025-01-01T00:00:00Z"
-  org.opencontainers.image.revision: "1.0.0"
-  org.opencontainers.image.version: "1.0.0"
