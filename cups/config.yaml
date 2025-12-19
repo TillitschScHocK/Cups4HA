@@ -1,6 +1,6 @@
 ---
-version: 1.0.1
-slug: cups4ha
+version: 1.0.0
+slug: cups
 name: Cups4HA
 description: CUPS Print Server for Home Assistant - Network printing made easy
 url: https://github.com/TillitschScHocK/Cups4HA
@@ -13,10 +13,6 @@ arch:
   - i386
 hassio_api: true
 host_network: true
-webui: http://[HOST]:631
-panel_icon: mdi:printer
-panel_title: Cups4HA
-panel_admin: true
 map:
   - data:rw
   - share:rw
