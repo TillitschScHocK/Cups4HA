@@ -1,6 +1,0 @@
----
-name: CUPS Print Server Repository
-url: https://github.com/TillitschScHocK/Cupy4HA
-maintainer: TillitschScHocK <94850668+TillitschScHocK@users.noreply.github.com>
-codeowners:
-  - TillitschScHocK

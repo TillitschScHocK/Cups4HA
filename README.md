@@ -1,195 +1,152 @@
-# Cupy4HA - CUPS Print Server für Home Assistant
+# Home Assistant CUPS Print Server Add-on
 
-[![Home Assistant Add-on Repository](https://img.shields.io/badge/home%20assistant-add%20on%20repository-41BDF5.svg)](https://github.com/TillitschScHocK/Cupy4HA)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/arest/cups-addon)
+[![Supports aarch64 Architecture](https://img.shields.io/badge/aarch64-yes-green.svg)](https://github.com/arest/cups-addon)
+[![Supports amd64 Architecture](https://img.shields.io/badge/amd64-yes-green.svg)](https://github.com/arest/cups-addon)
+[![Supports armhf Architecture](https://img.shields.io/badge/armhf-yes-green.svg)](https://github.com/arest/cups-addon)
+[![Supports armv7 Architecture](https://img.shields.io/badge/armv7-yes-green.svg)](https://github.com/arest/cups-addon)
+[![Supports i386 Architecture](https://img.shields.io/badge/i386-yes-green.svg)](https://github.com/arest/cups-addon)
 
-## Überblick
+This Home Assistant add-on provides a CUPS (Common Unix Printing System) print server, allowing you to manage and share printers over your local network. It's designed for Home Assistant users who want to integrate network printing capabilities directly into their smart home setup.
 
-Cupy4HA ist ein vollwertiger CUPS-Druckserver für Home Assistant mit automatischer Netzwerkdruckererkennung, AirPrint-Unterstützung und umfassender USB-Drucker-Kompatibilität.
+## Features
 
-## Funktionen
-
-- ✅ **Vollständige CUPS-Installation** mit allen gängigen Druckertreibern
-- ✅ **AirPrint-Unterstützung** für iOS/macOS Geräte
-- ✅ **Automatische Netzwerkdruckererkennung** via mDNS/Bonjour
-- ✅ **USB-Druckerzugriff** mit automatischer Erkennung
-- ✅ **Web-Interface** für intuitive Verwaltung
-- ✅ **Persistente Konfiguration** - Drucker bleiben nach Neustart
-- ✅ **Multi-Architektur-Support** (ARM, ARM64, AMD64, i386)
-- ✅ **D-Bus Integration** für erweiterte Druckerverwaltung
-
-## Supported Drucker
-
-**Out of the Box unterstützt:**
-- HP (LaserJet, OfficeJet, Photosmart)
-- Canon (PIXMA, imageCLASS)
-- Epson (WorkForce, Expression)
-- Brother (HL, MFC)
-- Xerox, Ricoh, Samsung, Kyocera, Konica Minolta, OKI und viele mehr
-
-**Verbindungstypen:**
-- USB
-- Ethernet (LAN)
-- WiFi
-- Über Home Assistant Host-Netzwerk
+- **Network Printing**: Share printers across your local network using CUPS
+- **Web Interface**: Access the CUPS administration panel at `http://<your-ha-ip>:631` to add and manage printers
+- **Secure Administration**: Optional authentication for the CUPS admin interface
+- **Printer Support**: Compatible with a wide range of network and USB printers
+- **Lightweight**: Built on Alpine Linux for minimal resource usage
+- **Data Persistence**: Printer settings and configurations persist across restarts and updates
 
 ## Installation
 
-### 1. Repository hinzufügen
+### From Home Assistant Add-on Store
 
-Gehe zu **Home Assistant** → **Einstellungen** → **Add-ons** → **Add-on Store**
+1. Navigate to your Home Assistant instance.
+2. Go to **Settings** → **Add-ons** → **Add-on Store**.
+3. Click the 3-dot menu in the top right corner and select **Repositories**.
+4. Add `https://github.com/arest/cups-addon` as a repository.
+5. Find the "CUPS Print Server" add-on in the store and click it.
+6. Click **Install**.
 
-Klicke auf die drei Punkte oben rechts und wähle **Repositories**
+### Manual Installation
 
-Füge folgende URL ein:
-```
-https://github.com/TillitschScHocK/Cupy4HA
-```
+If you prefer to manually install:
 
-### 2. Addon installieren
+1. Clone this repository to your local machine:
+   ```bash
+   git clone https://github.com/arest/cups-addon.git
+   ```
 
-Suche nach "CUPS Print Server" und klicke auf **Installieren**
+2. Copy the repository to your Home Assistant add-ons directory:
+   ```bash
+   scp -r cups-addon/cups root@<your-ha-ip>:/addons/
+   ```
 
-### 3. Addon starten
+3. In Home Assistant, go to **Settings** → **Add-ons** → **Add-on Store**.
+4. Click the 3-dot menu (top right) → **Repositories**.
+5. Add `/addons` as a repository URL and click **Add**.
+6. Refresh the add-on store to see "CUPS Print Server."
+7. Install the add-on.
 
-Nach der Installation klickst du auf **Starten**
+## Configuration
 
-### 4. Web-Interface aufrufen
-
-```
-http://[HOME_ASSISTANT_IP]:631
-```
-
-Zum Beispiel: `http://192.168.1.100:631`
-
-## Schnellstart
-
-### Drucker hinzufügen
-
-1. Öffne das CUPS Web-Interface auf Port 631
-2. Gehe zu **Admin** → **Drucker hinzufügen**
-3. Wähle deinen Drucker aus der Liste
-4. Wähle den passenden Treiber
-5. Klicke auf **Drucker hinzufügen**
-
-### Auf iOS/macOS drucken (AirPrint)
-
-1. Öffne eine App, die drucken kann (Safari, Mail, Fotos, etc.)
-2. Klicke auf **Teilen** oder **Drucken**
-3. Der CUPS-Server sollte in der Druckerliste erscheinen
-4. Wähle den Drucker und klicke auf **Drucken**
-
-### Auf Windows/Linux drucken
-
-**Windows:**
-- Systemsteuerung → Geräte und Drucker
-- Drucker hinzufügen → Netzwerkdrucker
-- URL eingeben: `ipp://[HA-IP]:631/`
-
-**Linux:**
-```bash
-lp -h [HA-IP] -d PrinterName datei.pdf
-```
-
-## Konfiguration
+The add-on provides the following configuration options:
 
 ```yaml
-log_level: "info"        # debug, info, warning, error
-enable_airprint: true    # AirPrint-Unterstützung
-enable_samba: false      # Samba/SMB Druckerfreigabe (zukünftig)
+admin_username: printadmin
+admin_password: your_secure_password
 ```
 
-## Dokumentation
+- **admin_username**: Username for the CUPS admin interface (default: printadmin)
+- **admin_password**: Password for the CUPS admin interface
 
-- **[Benutzerhandbuch](cups_addon/README.md)** - Detaillierte Anleitung und FAQ
-- **[Technische Dokumentation](cups_addon/TECHNICAL.md)** - Architektur und Konfiguration
-- **[Integration Guide](cups_addon/INTEGRATION.md)** - Home Assistant Integration
-- **[Changelog](cups_addon/CHANGELOG.md)** - Release Notes
-- **[Setup Guide](CUPS_ADDON_SETUP.md)** - Schneller Überblick
+After configuring:
 
-## Support & Debugging
+1. Start the add-on from the Info tab.
+2. Check the Log tab to ensure it starts successfully.
+3. Access the CUPS web interface at `http://<your-ha-ip>:631`.
 
-### Logs anschauen
+## Usage
 
-Home Assistant → Add-ons → CUPS Print Server → **Logs**
+### Access the Web Interface
 
-Verstelle den **Log Level** auf `debug` für detaillierte Ausgaben
+Visit `http://<your-ha-ip>:631` in your browser.
 
-### Häufige Probleme
+### Add a Printer
 
-**Q: Addon startet nicht**
-- Logs anschauen auf Fehler
-- Host Network Mode ist aktiviert?
-- Port 631 nicht durch anderes Addon blockiert?
+1. Go to the **Administration** tab.
+2. Click **Add Printer** and follow the prompts.
+3. Select the appropriate driver for your printer model.
 
-**Q: USB-Drucker nicht erkannt**
-- `privileged: true` in config.yaml?
-- `/dev/bus/usb` Device Mapping aktiv?
-- Drucker physisch verbunden?
+### Print from Devices
 
-**Q: Netzwerkdrucker nicht erkannt**
-- Drucker im Netzwerk erreichbar? (`ping`)
-- Avahi Daemon läuft? (siehe Logs)
-- Host Network Mode aktiviert?
+Configure your computers or devices to use the printer at `<your-ha-ip>:631`.
 
-**Q: CUPS Web-Interface antwortet nicht**
-- Port 631 nicht blockiert?
-- Addon läuft noch? (Status prüfen)
-- Seite aktualisieren und Cookies löschen
+## Supported Printer Types
 
-## Ressourcenverbrauch
+This add-on supports various printer types:
 
-- **RAM:** 150-300 MB typisch
-- **CPU:** <5% im Idle-Zustand
-- **Speicher:** ~500 MB für Installation
-- **Netzwerk:** Minimal (nur bei Druckaufträgen)
+- Network printers (via IPP, LPD, etc.)
+- USB printers connected to your Home Assistant host
+- Shared Windows printers (via Samba)
+- AirPrint for Apple devices
 
-## Sicherheit
+## Troubleshooting
 
-⚠️ **Wichtig:**
+### Can't Access Web Interface
 
-- Addon läuft im Host-Network-Modus (erforderlich für mDNS)
-- Wird mit Root-Rechten ausgeführt (für USB-Zugriff)
-- Nur im lokalen, vertrauenswürdigen Netzwerk verwenden
-- Port 631 nicht nach außen exposen
+- Ensure the add-on is running (check logs).
+- Verify port 631 isn't blocked by your firewall.
+- Check that your network allows access to the Home Assistant device.
 
-## Voraussetzungen
+### Printer Not Detected
 
-- Home Assistant mit Docker-Unterstützung
-- Mindestens 300 MB RAM verfügbar
-- Port 631/tcp und 631/udp (CUPS)
-- Port 5353/udp (mDNS/Avahi)
-- Lokales Netzwerk mit mDNS-Support
+- Ensure the printer is network-accessible or connected via USB to the host.
+- For USB printers, you may need to configure USB device pass-through to the add-on.
+- Check CUPS logs in the add-on's Log tab.
 
-## Unterstützte Architekturen
 
-- amd64 (Intel/AMD 64-bit)
-- aarch64 (ARM 64-bit, z.B. Raspberry Pi 4)
-- armv7 (ARM 32-bit v7)
-- armhf (ARM 32-bit Hard Float)
-- i386 (Intel 32-bit)
+### Printer Drivers
+   https://www.openprinting.org/download/PPD/
+   https://www.openprinting.org/drivers/
 
-## Versionshistorie
+### Authentication Issues
 
-Siehe [CHANGELOG.md](cups_addon/CHANGELOG.md)
+- Verify you're using the correct username and password configured in the add-on settings.
+- If you've forgotten your password, you can reset it by reconfiguring the add-on.
 
-## Lizenz
+## Contributing
 
-MIT License - siehe [LICENSE](LICENSE)
+Contributions are welcome! Please:
+
+1. Fork this repository.
+2. Create a feature branch (`git checkout -b feature/your-feature`).
+3. Commit your changes (`git commit -m "Add your feature"`).
+4. Push to the branch (`git push origin feature/your-feature`).
+5. Open a pull request.
+
+## License
+
+This project is licensed under the MIT License.
 
 ## Credits
 
-- Basierend auf [CUPS](https://www.cups.org/)
-- [Avahi](https://avahi.org/) für mDNS/Bonjour
-- [Home Assistant Community Addons](https://github.com/hassio-addons)
+- Built by [Andrea Restello](https://github.com/arest)
+- Powered by [Home Assistant](https://www.home-assistant.io/) and [CUPS](https://www.cups.org/)
 
-## Support
+## Data Persistence
 
-Bei Fragen oder Problemen bitte ein Issue auf GitHub erstellen:
+This add-on stores all CUPS data in the Home Assistant `/data` directory, ensuring:
 
-[GitHub Issues](https://github.com/TillitschScHocK/Cupy4HA/issues)
+- Printer configurations persist across add-on restarts
+- Print jobs and settings are maintained through system reboots
+- Add-on updates won't cause loss of printer configurations
+- All CUPS data is included in Home Assistant backups
 
----
+The following directories are maintained in the persistent storage:
+- `/data/cups/config`: CUPS configuration files
+- `/data/cups/cache`: CUPS cache data
+- `/data/cups/logs`: CUPS log files
+- `/data/cups/state`: CUPS state information
 
-**Status:** Production Ready  
-**Version:** 1.0.0  
-**Last Updated:** 2025-01-01
