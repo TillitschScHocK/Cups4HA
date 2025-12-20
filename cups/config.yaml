@@ -28,3 +28,4 @@ schema:
   admin_username: str
   admin_password: password
 startup: services
+webui: http://[HOST]:[PORT:631]
