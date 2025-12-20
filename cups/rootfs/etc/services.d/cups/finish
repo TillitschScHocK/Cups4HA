@@ -1,0 +1,18 @@
+#!/usr/bin/with-contenv bash
+
+# This script runs when CUPS is stopped
+echo "Saving CUPS configuration to persistent storage..."
+
+# Ensure destination directory exists
+mkdir -p /data/cups/config
+
+# Copy all configuration files to persistent storage
+if [ -d "/etc/cups" ]; then
+    cp -f /etc/cups/cupsd.conf /data/cups/config/ 2>/dev/null || true
+    cp -f /etc/cups/printers.conf /data/cups/config/ 2>/dev/null || true
+    cp -f /etc/cups/classes.conf /data/cups/config/ 2>/dev/null || true
+    cp -f /etc/cups/subscriptions.conf /data/cups/config/ 2>/dev/null || true
+    cp -f /etc/cups/ppd/* /data/cups/config/ 2>/dev/null || true
+fi
+
+echo "CUPS configuration saved successfully."
