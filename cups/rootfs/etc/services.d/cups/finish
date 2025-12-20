@@ -1,18 +1,33 @@
 #!/usr/bin/with-contenv bash
 
 # This script runs when CUPS is stopped
-echo "Saving CUPS configuration to persistent storage..."
+echo "[INFO] Saving CUPS configuration to persistent storage..."
 
-# Ensure destination directory exists
+# Ensure destination directories exist
 mkdir -p /data/cups/config
+mkdir -p /data/cups/config/ppd
+mkdir -p /data/cups/config/ssl
 
 # Copy all configuration files to persistent storage
 if [ -d "/etc/cups" ]; then
+    echo "[INFO] Backing up CUPS configuration files..."
     cp -f /etc/cups/cupsd.conf /data/cups/config/ 2>/dev/null || true
     cp -f /etc/cups/printers.conf /data/cups/config/ 2>/dev/null || true
     cp -f /etc/cups/classes.conf /data/cups/config/ 2>/dev/null || true
     cp -f /etc/cups/subscriptions.conf /data/cups/config/ 2>/dev/null || true
-    cp -f /etc/cups/ppd/* /data/cups/config/ 2>/dev/null || true
+    cp -f /etc/cups/snmp.conf /data/cups/config/ 2>/dev/null || true
+    
+    # Backup PPD files (printer drivers)
+    if [ -d "/etc/cups/ppd" ] && [ "$(ls -A /etc/cups/ppd 2>/dev/null)" ]; then
+        echo "[INFO] Backing up printer PPD files..."
+        cp -rf /etc/cups/ppd/* /data/cups/config/ppd/ 2>/dev/null || true
+    fi
+    
+    # Backup SSL certificates
+    if [ -d "/etc/cups/ssl" ] && [ "$(ls -A /etc/cups/ssl 2>/dev/null)" ]; then
+        echo "[INFO] Backing up SSL certificates..."
+        cp -rf /etc/cups/ssl/* /data/cups/config/ssl/ 2>/dev/null || true
+    fi
 fi
 
-echo "CUPS configuration saved successfully."
+echo "[INFO] CUPS configuration saved successfully."
